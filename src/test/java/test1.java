@@ -2,8 +2,12 @@ import org.example.Car;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.jupiter.api.*;
+import java.lang.Object;
+import org.junit.Assume;
 
 import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assumptions.*;
 
 @Tag("development")
 public class test1 {
@@ -27,7 +31,39 @@ public class test1 {
     public void testAfterEach(){
         System.out.println("After Each");
     }
+    @Test
+    @DisplayName("New Test")
+    public void newTest(){
+        String str1 = "abc";
+        String str2 = "pqr";
+        String str3 = "xyz";
+        assertAll("numbers",() -> assertEquals(str1,"abc"),() -> assertEquals(str2,"pqr"),
+                () -> assertEquals(str3,"xyz")
+        );
+    }
 
+    @Test
+    void testAssumingThat() {
+        System.setProperty("env", "test");
+        assumingThat("test".equals(System.getProperty("env")), () -> { assertEquals(10, 10);System.out.println("perform below assertions only on the test env");});
+        assertEquals(20, 20);
+        System.out.println("perform below assertions on all env");
+    }
+
+
+
+    @Test
+    @DisplayName("Assume True")
+    void testAssumeTrue() {
+        boolean b = 'A' == 'B';
+        assumeFalse(b);
+        assumeFalse(b,"THis is false");
+        // will run only when this b is false
+        boolean q = 'B' == 'B';
+        assumeTrue(q,"This is true");
+        // will run only when this q is true
+        assertEquals("Hello", "Hello");
+    }
     @Test
 //    @Disabled
     @DisplayName("Test Checking Max Speed")
@@ -42,6 +78,7 @@ public class test1 {
         System.out.println("In test1");
         Assertions.assertTrue(2==2);
 //        Assertions.assertThrows("");
+
     }
 
     @After
@@ -56,6 +93,7 @@ public class test1 {
         assertEquals(car.getMinSpeed(),20);
         assertEquals("msg",2,2);
 //        asser
+//        assumeTr
         System.out.println("In test2");
     }
 
