@@ -45,9 +45,10 @@ public class test1 {
     @Test
     void testAssumingThat() {
         System.setProperty("env", "test");
+        assumingThat("test".equals(System.getProperty("dev")), () -> { assertEquals(10, 10);System.out.println("perform below assertions only on the dev env");});
         assumingThat("test".equals(System.getProperty("env")), () -> { assertEquals(10, 10);System.out.println("perform below assertions only on the test env");});
-        assertEquals(20, 20);
-        System.out.println("perform below assertions on all env");
+        //        assertEquals(20, 20);
+//        System.out.println("perform below assertions on all env");
     }
 
 
